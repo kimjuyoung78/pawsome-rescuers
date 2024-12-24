@@ -434,7 +434,6 @@ const Container2 = styled.div`
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
-	/* background-color: white; // 배경색 추가 */
 	z-index: 1000; // 다른 요소들 위에 표시
 `;
 

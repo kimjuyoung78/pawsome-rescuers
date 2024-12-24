@@ -126,6 +126,7 @@
                     // 첫 번째 응답에서만 전체 데이터 개수를 가져옴
                     if (pIndex === 1) {
                         totalCount = response.data.AbdmAnimalProtect[0].head[0].list_total_count;
+                        console.log(`총 데이터 수 : ${totalCount}`);
                     }
 
                     // 가져온 데이터가 pSize보다 적으면 모든 데이터를 가져온 것으로 간주
@@ -179,7 +180,7 @@
                 urgentAnimals.push(...newUrgentAnimals);
         
                 if (animals.length < pSize || urgentAnimals.length >= 20) {
-                break; // Stop if we've fetched all data or have enough urgent animals
+                break; 
                 }
         
                 pIndex++;
@@ -189,10 +190,9 @@
             }
             }
         
-            return urgentAnimals.slice(0, 20); // Limit to 20 urgent animals
+            return urgentAnimals.slice(0, 20); //최대 20개 데이터
         };
         
-        // Helper function to parse date
         const parseDate = (dateString: string): Date => {
             const year = parseInt(dateString.substring(0, 4));
             const month = parseInt(dateString.substring(4, 6)) - 1;

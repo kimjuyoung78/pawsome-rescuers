@@ -3,45 +3,46 @@ import styled from 'styled-components';
 
 const GlobalStyle = createGlobalStyle`
 
-  @font-face {
-    font-family: 'NanumSquareNeo';
-    src: url('/fonts/NanumSquareNeoOTF-Lt.woff2') format('woff2'),
-         url('/fonts/NanumSquareNeoOTF-Lt.woff') format('woff');
-    font-weight: 300;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url('/fonts/NanumSquareNeoOTF-Lt.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
 
-  @font-face {
-    font-family: 'NanumSquareNeo';
-    src: url('/fonts/NanumSquareNeoOTF-Rg.woff2') format('woff2'),
-         url('/fonts/NanumSquareNeoOTF-Rg.woff') format('woff');
-    font-weight: 400;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url('/fonts/NanumSquareNeoOTF-Rg.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
 
-  @font-face {
-    font-family: 'NanumSquareNeo';
-    src: url('/fonts/NanumSquareNeoOTF-Bd.woff2') format('woff2'),
-         url('/fonts/NanumSquareNeoOTF-Bd.woff') format('woff');
-    font-weight: 500;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url('/fonts/NanumSquareNeoOTF-Bd.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
 
-  @font-face {
-    font-family: 'NanumSquareNeo';
-    src: url('/fonts/NanumSquareNeoOTF-Eb.woff2') format('woff2'),
-         url('/fonts/NanumSquareNeoOTF-Eb.woff') format('woff');
-    font-weight: 600;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url('/fonts/NanumSquareNeoOTF-Eb.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
 
-  @font-face {
-    font-family: 'NanumSquareNeo';
-    src: url('/fonts/NanumSquareNeoOTF-Hv.woff2') format('woff2'),
-         url('/fonts/NanumSquareNeoOTF-Hv.woff') format('woff');
-    font-weight: 700;
-    font-style: normal;
-  }
+@font-face {
+  font-family: 'NanumSquareNeo';
+  src: url('/fonts/NanumSquareNeoOTF-Hv.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
 
   body, button, input, select, textarea, div {
     font-family: 'NanumSquareNeo', sans-serif !important;
