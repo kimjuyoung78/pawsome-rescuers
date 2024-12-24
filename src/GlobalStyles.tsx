@@ -90,7 +90,6 @@ export const Container = styled.div`
     padding: 20px;
     max-width: 1200px;
     margin: 10px 10px 10px 120px;
-    /* border: solid #a7e9ff 2px; */
 `;
 
 export const Arrow = styled.div`
@@ -125,8 +124,6 @@ export const AnimalListContainer = styled.div`
     justify-content: center;
     margin: 0 0 20px 20px;
     padding: 0 20px 20px 20px;
-
-    /* border: yellow solid 2px; */
 `;
 
 export const Text1 = styled.div`
@@ -149,10 +146,6 @@ export const ScrapAnimalListContainer = styled.div`
     justify-content: center;
     margin: 0 0 20px 20px;
     padding: 0 20px 20px 20px;
-    /* border: yellow solid 2px; */
 `;
 
 export default GlobalStyle;
-   
-   /* margin: 0;
-    padding: 0; */
