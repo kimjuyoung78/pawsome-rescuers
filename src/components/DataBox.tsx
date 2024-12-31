@@ -9,6 +9,8 @@ interface DataBoxProps {
 }
 
 const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
+	const [isLoaded, setIsLoaded] = useState(false); // 고해상도 이미지 로딩 상태 관리
+
     const [isScraped, setIsScraped] = useState(false);
 
     const getAge = (ageInfo: string): number => {
@@ -56,12 +58,20 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
             <div className="group">
                 <div className="overlap">
                     <div className="overlap-group-wrapper">
-                        <img 
-                            src={animal.IMAGE_COURS} 
-                            alt={animal.SPECIES_NM} 
-                            className="animal-image"
-			    loading="lazy"
-                        />
+		{/* 썸네일 이미지 */}
+		<img
+			src={animal.THUMB_IMAGE_COURS}
+			alt={animal.SPECIES_NM}
+			className={`animal-thumbnail ${isLoaded ? "hidden" : ""}`}
+			/>
+			{/* 고해상도 이미지 */}
+			<img
+			src={animal.IMAGE_COURS}
+			alt={animal.SPECIES_NM}
+			className={`animal-image ${isLoaded ? "" : "hidden"}`}
+			onLoad={() => setIsLoaded(true)} // 로딩 완료 시 상태 업데이트
+			loading="lazy"
+			/>
                         <div className="overlap-button">
                             <div className="text-wrapper">{animal.STATE_NM}</div>
                         </div>
@@ -187,10 +197,10 @@ const StyledBox = styled.div`
 	.scrapIcon {
 		width: 20px;
 		height: 20px;
-		position: absolute; /* 절대 위치 설정 */
-		right: 40px; /* 오른쪽에서 10px 떨어짐 */
+		position: absolute;
+		right: 40px;
 		top: 0;
-		cursor: pointer; /* 클릭 가능함을 표시 */
+		cursor: pointer;
 	}
 	.frame-wrapper {
 		height: 130px;
