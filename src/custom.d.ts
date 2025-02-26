@@ -19,5 +19,3 @@ declare module '*.svg' {
     const content: any;
     export default content;
   }
-  
-  // 필요에 따라 다른 파일 형식도 추가할 수 있습니다
