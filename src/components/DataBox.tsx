@@ -60,6 +60,7 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
                             src={animal.IMAGE_COURS} 
                             alt={animal.SPECIES_NM} 
                             className="animal-image"
+			    loading="lazy"
                         />
                         <div className="overlap-button">
                             <div className="text-wrapper">{animal.STATE_NM}</div>

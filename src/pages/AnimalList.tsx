@@ -29,7 +29,6 @@ import {
 	Pagination as SwiperPagination,
 } from "swiper/modules";
 
-// Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
