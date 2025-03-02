@@ -136,11 +136,25 @@ const StyledBox = styled.div`
         border-radius: 20px 20px 0 0;
     }
 
-    .animal-image {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+    .animal-thumbnail {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .animal-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s ease-in-out; 
+  }
+
+  .hidden {
+    opacity: 0; /* 숨김 처리 */
+    position: absolute; /* 공간 차지 방지 */
+    pointer-events: none; /* 클릭 불가능 */
+  }
 
     .overlap-button {
         position: absolute;
@@ -165,7 +179,6 @@ const StyledBox = styled.div`
         margin-top: 1px;
         white-space: nowrap;
     }
-	//상단 박스 끝
 
 	.rectangle {
 		width: 189.527px;
