@@ -80,8 +80,8 @@ const filterOptions: FilterOptionsType = {
 const AnimalList: React.FC = () => {
 	const [activeDropdown, setActiveDropdown] = useState<string | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
-	const [animalData, setAnimalData] = useState<AnimalData[]>([]);
-	const [totalCount, setTotalCount] = useState(0); // 전체 데이터 개수를 저장할 상태
+	const [animalData, setAnimalData] = useState<AnimalData[]>([]); // 현재 페이지의 데이터만 저장
+	const [totalCount, setTotalCount] = useState(0); // 전체 데이터 개수
 	const [urgentAnimals, setUrgentAnimals] = useState<AnimalData[]>([]);
 	const itemsPerPage = 15;
 	const [isLoadingUrgent, setIsLoadingUrgent] = useState(true);
@@ -302,42 +302,40 @@ const AnimalList: React.FC = () => {
 					</FilterBoxWrapper>
 				))}
 			</FilterContainer>
-
 			<AnimalListContainer>
-				{/* 수정: currentItems 대신 animalData 사용 */}
-				{animalData.map((animal) => (
-					<Link
-						to={`/animallist/detail/${animal.ABDM_IDNTFY_NO}`}
-						key={animal.ABDM_IDNTFY_NO}
-					>
-						<AnimalDataBox animal={animal} />
-					</Link>
-				))}
-			</AnimalListContainer>
+        {animalData.map((animal) => (
+          <Link
+            to={`/animallist/detail/${animal.ABDM_IDNTFY_NO}`}
+            key={animal.ABDM_IDNTFY_NO}
+          >
+            <AnimalDataBox animal={animal} />
+          </Link>
+        ))}
+      </AnimalListContainer>
 
-			<Pagination>
-				<Arrow onClick={handlePrevPage}>
-					<img
-						src={currentPage === 1 ? Arrow_left : Arrow_left_blue}
-						alt="Previous page"
-					/>
-				</Arrow>
-				{getPageNumbers().map((page) => (
-					<PageButton
-						key={page}
-						onClick={() => setCurrentPage(page)}
-						active={currentPage === page}
-					>
-						{page}
-					</PageButton>
-				))}
-				<Arrow onClick={handleNextPage}>
-					<img
-						src={currentPage === totalPages ? Arrow_right : Arrow_right_blue}
-						alt="Next page"
-					/>
-				</Arrow>
-			</Pagination>
+      <Pagination>
+        <Arrow onClick={handlePrevPage}>
+          <img
+            src={currentPage === 1 ? Arrow_left : Arrow_left_blue}
+            alt="Previous page"
+          />
+        </Arrow>
+        {getPageNumbers().map((page) => (
+          <PageButton
+            key={page}
+            onClick={() => setCurrentPage(page)}
+            active={currentPage === page}
+          >
+            {page}
+          </PageButton>
+        ))}
+        <Arrow onClick={handleNextPage}>
+          <img
+            src={currentPage === totalPages ? Arrow_right : Arrow_right_blue}
+            alt="Next page"
+          />
+        </Arrow>
+      </Pagination>
 		</Container>
 	);
 };

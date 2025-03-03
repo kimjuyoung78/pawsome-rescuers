@@ -2,186 +2,204 @@ import React, { useState, useEffect } from "react";
 import scrapNo from "../assets/images/scrap_no.svg";
 import scrapYes from "../assets/images/scrap_yes.svg";
 import styled from "styled-components";
-import { AnimalData } from '../services/api';
+import { AnimalData } from "../services/api";
 interface DataBoxProps {
-    animal: AnimalData;
-    onScrapChange?: (animalId: string, isScraped: boolean) => void;
+	animal: AnimalData;
+	onScrapChange?: (animalId: string, isScraped: boolean) => void;
 }
 
 const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 	const [isLoaded, setIsLoaded] = useState(false); // 고해상도 이미지 로딩 상태 관리
+	// 이미지 경로에서 날짜와 ID를 추출하여 WebP 포맷 URL 생성
+	const getWebPImageUrl = (imageUrl: string) => {
+		const parts = imageUrl.split("/");
+		const year = parts[5]; // 경로에서 연도 추출
+		const month = parts[6]; // 경로에서 월 추출
+		const fileName = parts[7].split(".")[0]; // 파일명 추출 (확장자 제거)
+		return `http://www.animal.go.kr/files/shelter/${year}/${month}/${fileName}.webp`;
+	};
 
-    const [isScraped, setIsScraped] = useState(false);
+	const [isScraped, setIsScraped] = useState(false);
 
-    const getAge = (ageInfo: string): number => {
-        const year = ageInfo.split('(')[0];
-        const currentYear = new Date().getFullYear();
-        return currentYear - parseInt(year);
-    };
-    
-    const getNeuterStatus = (neutYn: string): string => {
-        return neutYn === 'N' ? '중성화 미완료' : '중성화 완료';
-    };
-    
-    useEffect(() => {
-        const scrapedAnimals = JSON.parse(localStorage.getItem('scrapedAnimals') || '[]');
-        setIsScraped(scrapedAnimals.includes(animal.ABDM_IDNTFY_NO));
-    }, [animal.ABDM_IDNTFY_NO]);
+	const getAge = (ageInfo: string): number => {
+		const year = ageInfo.split("(")[0];
+		const currentYear = new Date().getFullYear();
+		return currentYear - parseInt(year);
+	};
 
-    const toggleScrap = (event: React.MouseEvent) => {
-        event.stopPropagation();  // 이벤트 전파 중지
-        event.preventDefault();   // 기본 동작 방지
+	const getNeuterStatus = (neutYn: string): string => {
+		return neutYn === "N" ? "중성화 미완료" : "중성화 완료";
+	};
 
-        const newScrapState = !isScraped;
-        setIsScraped(newScrapState);
-        
-        const scrapedAnimals = JSON.parse(localStorage.getItem('scrapedAnimals') || '[]');
-        if (newScrapState) {
-            scrapedAnimals.push(animal.ABDM_IDNTFY_NO);
-            window.alert('스크랩 되었습니다.');
-        } else {
-            const index = scrapedAnimals.indexOf(animal.ABDM_IDNTFY_NO);
-            if (index > -1) {
-                scrapedAnimals.splice(index, 1);
-            }
-            window.alert('스크랩이 해제되었습니다.');
-        }
-        localStorage.setItem('scrapedAnimals', JSON.stringify(scrapedAnimals));
+	useEffect(() => {
+		const scrapedAnimals = JSON.parse(
+			localStorage.getItem("scrapedAnimals") || "[]",
+		);
+		setIsScraped(scrapedAnimals.includes(animal.ABDM_IDNTFY_NO));
+	}, [animal.ABDM_IDNTFY_NO]);
 
-        if (onScrapChange) {
-            onScrapChange(animal.ABDM_IDNTFY_NO, newScrapState);
-        }
-    };
+	const toggleScrap = (event: React.MouseEvent) => {
+		event.stopPropagation(); // 이벤트 전파 중지
+		event.preventDefault(); // 기본 동작 방지
 
-    return (
-        <StyledBox>
-            <div className="group">
-                <div className="overlap">
-                    <div className="overlap-group-wrapper">
-		{/* 썸네일 이미지 */}
-		<img
-  src={animal.THUMB_IMAGE_COURS}
-  srcSet={`${animal.THUMB_IMAGE_COURS} 480w, ${animal.IMAGE_COURS} 1024w`}
-  sizes="(max-width: 768px) 100vw, 50vw"
-  alt={animal.SPECIES_NM}
-  loading="lazy"
-/>
+		const newScrapState = !isScraped;
+		setIsScraped(newScrapState);
 
-			{/* 고해상도 이미지 */}
-			<img
-			src={animal.IMAGE_COURS}
-			alt={animal.SPECIES_NM}
-			className={`animal-image ${isLoaded ? "" : "hidden"}`}
-			onLoad={() => setIsLoaded(true)} // 로딩 완료 시 상태 업데이트
-			loading="lazy"
-			/>
-                        <div className="overlap-button">
-                            <div className="text-wrapper">{animal.STATE_NM}</div>
-                        </div>
-                    </div>
-                </div>
-                <div className="div">
-                    <div className="overlap-2">
-                        <img 
-                            className="scrapIcon" 
-                            alt="scrap icon" 
-                            src={isScraped ? scrapYes : scrapNo} 
-                            onClick={toggleScrap}
-                        />
-                        <div className="frame-wrapper">
-                            <div className="frame">
-                                <div className="overlap-3">
-                                    <div className="text-wrapper-2">중성화</div>
-                                    <div className="text-wrapper-3">시도군</div>
-                                    <div className="text-wrapper-4">성별</div>
-                                    <div className="text-wrapper-5">나이</div>
-                                </div>
-                                <div className="overlap-group-2">
-                                    <div className="text-wrapper-6">{animal.SEX_NM === 'M' ? '남아' : '여아'}</div>
-                                    <div className="text-wrapper-7">{getNeuterStatus(animal.NEUT_YN)}</div>
-                                </div>
-                                <div className="text-wrapper-8">{animal.SIGUN_NM}</div>
-                                <div className="text-wrapper-9">{getAge(animal.AGE_INFO)}살</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="text-wrapper-10">{animal.SPECIES_NM}</div>
-                </div>
-            </div>
-        </StyledBox>
-    );
+		const scrapedAnimals = JSON.parse(
+			localStorage.getItem("scrapedAnimals") || "[]",
+		);
+		if (newScrapState) {
+			scrapedAnimals.push(animal.ABDM_IDNTFY_NO);
+			window.alert("스크랩 되었습니다.");
+		} else {
+			const index = scrapedAnimals.indexOf(animal.ABDM_IDNTFY_NO);
+			if (index > -1) {
+				scrapedAnimals.splice(index, 1);
+			}
+			window.alert("스크랩이 해제되었습니다.");
+		}
+		localStorage.setItem("scrapedAnimals", JSON.stringify(scrapedAnimals));
+
+		if (onScrapChange) {
+			onScrapChange(animal.ABDM_IDNTFY_NO, newScrapState);
+		}
+	};
+
+	return (
+		<StyledBox>
+			<div className="group">
+				<div className="overlap">
+					<div className="overlap-group-wrapper">
+						{/* 썸네일 이미지 */}
+						<img
+							src={getWebPImageUrl(animal.IMAGE_COURS)}
+							srcSet={`${animal.THUMB_IMAGE_COURS} 480w, ${animal.IMAGE_COURS} 1024w`}
+							sizes="(max-width: 768px) 100vw, 50vw"
+							alt={animal.SPECIES_NM}
+							loading="lazy"
+						/>
+
+						{/* 고해상도 이미지 */}
+						<img
+							src={animal.IMAGE_COURS}
+							alt={animal.SPECIES_NM}
+							className={`animal-image ${isLoaded ? "" : "hidden"}`}
+							onLoad={() => setIsLoaded(true)} // 로딩 완료 시 상태 업데이트
+							loading="lazy"
+						/>
+						<div className="overlap-button">
+							<div className="text-wrapper">{animal.STATE_NM}</div>
+						</div>
+					</div>
+				</div>
+				<div className="div">
+					<div className="overlap-2">
+						<img
+							className="scrapIcon"
+							alt="scrap icon"
+							src={isScraped ? scrapYes : scrapNo}
+							onClick={toggleScrap}
+						/>
+						<div className="frame-wrapper">
+							<div className="frame">
+								<div className="overlap-3">
+									<div className="text-wrapper-2">중성화</div>
+									<div className="text-wrapper-3">시도군</div>
+									<div className="text-wrapper-4">성별</div>
+									<div className="text-wrapper-5">나이</div>
+								</div>
+								<div className="overlap-group-2">
+									<div className="text-wrapper-6">
+										{animal.SEX_NM === "M" ? "남아" : "여아"}
+									</div>
+									<div className="text-wrapper-7">
+										{getNeuterStatus(animal.NEUT_YN)}
+									</div>
+								</div>
+								<div className="text-wrapper-8">{animal.SIGUN_NM}</div>
+								<div className="text-wrapper-9">
+									{getAge(animal.AGE_INFO)}살
+								</div>
+							</div>
+						</div>
+					</div>
+					<div className="text-wrapper-10">{animal.SPECIES_NM}</div>
+				</div>
+			</div>
+		</StyledBox>
+	);
 };
 
 export default DataBox;
 
 const StyledBox = styled.div`
-    .group {
-        width: 205px;
-        height: 320px;
-        position: relative;
-        border-radius: 20px;
-    }
+	.group {
+		width: 205px;
+		height: 320px;
+		position: relative;
+		border-radius: 20px;
+	}
 
-    .overlap {
-        height: 177px;
-        left: 0;
-        top: 0;
-        position: absolute;
-        width: 190px;
-        margin-left: 6px;
-    }
+	.overlap {
+		height: 177px;
+		left: 0;
+		top: 0;
+		position: absolute;
+		width: 190px;
+		margin-left: 6px;
+	}
 
-    .overlap-group-wrapper {
-        position: relative;
-        width: 100%;
-        height: 177px;
-        overflow: hidden;
-        border-radius: 20px 20px 0 0;
-    }
+	.overlap-group-wrapper {
+		position: relative;
+		width: 100%;
+		height: 177px;
+		overflow: hidden;
+		border-radius: 20px 20px 0 0;
+	}
 
-    .animal-thumbnail {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease-in-out;
-  }
+	.animal-thumbnail {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: opacity 0.3s ease-in-out;
+	}
 
-  .animal-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: opacity 0.3s ease-in-out; 
-  }
+	.animal-image {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		transition: opacity 0.3s ease-in-out;
+	}
 
-  .hidden {
-    opacity: 0; /* 숨김 처리 */
-    position: absolute; /* 공간 차지 방지 */
-    pointer-events: none; /* 클릭 불가능 */
-  }
+	.hidden {
+		opacity: 0; /* 숨김 처리 */
+		position: absolute; /* 공간 차지 방지 */
+		pointer-events: none; /* 클릭 불가능 */
+	}
 
-    .overlap-button {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        width: auto;
-        height: auto;
-        padding: 5px 10px;
-        background-color: #47b2ff;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+	.overlap-button {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		width: auto;
+		height: auto;
+		padding: 5px 10px;
+		background-color: #47b2ff;
+		border-radius: 10px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
 
-    .overlap-button .text-wrapper {
-        color: #ffffff;
-        font-family: "Inter-Bold", Helvetica;
-        font-size: 11px;
-        font-weight: 600;
-        letter-spacing: -0.44px;
-        margin-top: 1px;
-        white-space: nowrap;
-    }
+	.overlap-button .text-wrapper {
+		color: #ffffff;
+		font-family: "Inter-Bold", Helvetica;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: -0.44px;
+		margin-top: 1px;
+		white-space: nowrap;
+	}
 
 	.rectangle {
 		width: 189.527px;
@@ -225,10 +243,10 @@ const StyledBox = styled.div`
 		top: 19px;
 		width: 171px;
 	}
-	
+
 	.scrapNo {
 		height: 25px;
-        width: 16px;
+		width: 16px;
 		left: 167px;
 		position: absolute;
 		top: 0;
