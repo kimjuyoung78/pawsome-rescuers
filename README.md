@@ -1,6 +1,10 @@
 ## 발바닥 구조대 레포입니다🐾
 **배포 링크 : https://paw-rescuers.netlify.app/**
-### 진행 상황 
+<img width="800px" alt="image" src="https://github.com/user-attachments/assets/89fd9ba5-296a-4f9f-8134-d3819c996d0b">
+
+<img width="1100px" alt="image" src="https://github.com/user-attachments/assets/16551b8a-e672-4354-bcf8-b7a2cff59173">
+
+<!-- ### 진행 상황 
 #### 환경
 * * ~개발 환경 셋팅~
   * ~배포~
@@ -20,7 +24,7 @@
   * ~KakaoMap~
   * ~털친소 테스트 알고리즘~
   * ~스크랩~
-
+-->
 </br>
 
 **Git commit 메세지 규칙**
