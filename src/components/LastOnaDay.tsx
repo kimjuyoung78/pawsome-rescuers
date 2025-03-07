@@ -10,10 +10,8 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import styled from "styled-components";
 import { Text1 } from "../GlobalStyles";
-import { AnimalData } from "../services/api";
 import AnimalDataBox from "../components/DataBox";
 import { Link } from "react-router-dom";
-import { PropagateLoader } from "react-spinners";
 
 interface IData {
 	[key: string]: any;

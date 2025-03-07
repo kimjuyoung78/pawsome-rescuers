@@ -3,6 +3,7 @@ import scrapNo from "../assets/images/scrap_no.svg";
 import scrapYes from "../assets/images/scrap_yes.svg";
 import styled from "styled-components";
 import { AnimalData } from "../services/api";
+
 interface DataBoxProps {
 	animal: AnimalData;
 	onScrapChange?: (animalId: string, isScraped: boolean) => void;
@@ -10,13 +11,23 @@ interface DataBoxProps {
 
 const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 	const [isLoaded, setIsLoaded] = useState(false); // 고해상도 이미지 로딩 상태 관리
-	// 이미지 경로에서 날짜와 ID를 추출하여 WebP 포맷 URL 생성
+
+	// WebP 이미지 URL 생성 함수
 	const getWebPImageUrl = (imageUrl: string) => {
+		if (!imageUrl) return imageUrl; // null 또는 undefined 처리
+
 		const parts = imageUrl.split("/");
-		const year = parts[5]; // 경로에서 연도 추출
-		const month = parts[6]; // 경로에서 월 추출
-		const fileName = parts[7].split(".")[0]; // 파일명 추출 (확장자 제거)
+		const year = parts[5];
+		const month = parts[6];
+		const fileName = parts[7].split(".")[0];
 		return `http://www.animal.go.kr/files/shelter/${year}/${month}/${fileName}.webp`;
+	};
+
+	// CDN 이미지 URL 생성 함수 (선택 사항)
+	const getCDNImageUrl = (imageUrl: string) => {
+		if (!imageUrl) return imageUrl; // null 또는 undefined 처리
+		// CDN URL 생성 로직 (예: Cloudflare, AWS CloudFront 등)
+		return `https://your-cdn-domain/${imageUrl}`;
 	};
 
 	const [isScraped, setIsScraped] = useState(false);
@@ -70,23 +81,29 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 			<div className="group">
 				<div className="overlap">
 					<div className="overlap-group-wrapper">
-						{/* 썸네일 이미지 */}
-						<img
-							src={getWebPImageUrl(animal.IMAGE_COURS)}
-							srcSet={`${animal.THUMB_IMAGE_COURS} 480w, ${animal.IMAGE_COURS} 1024w`}
-							sizes="(max-width: 768px) 100vw, 50vw"
-							alt={animal.SPECIES_NM}
-							loading="lazy"
-						/>
+						{/* WebP 지원 및 폴백 이미지 제공, 반응형 이미지, 우선순위 설정 */}
+						<picture>
+							<source
+								srcSet={getWebPImageUrl(animal.IMAGE_COURS)}
+								type="image/webp"
+							/>
+							<img
+								src={animal.IMAGE_COURS}
+								srcSet={`${animal.THUMB_IMAGE_COURS} 480w, ${animal.IMAGE_COURS} 1024w`}
+								sizes="(max-width: 768px) 100vw, (min-width: 769px) 50vw"
+								alt={animal.SPECIES_NM}
+								loading="lazy"
+								className="animal-thumbnail"
+								onLoad={() => setIsLoaded(true)}
+								onError={(e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+									console.error("Image failed to load:", animal.IMAGE_COURS);
+									const target = e.currentTarget;
+									target.onerror = null; // Prevent infinite loop
+									target.src = animal.THUMB_IMAGE_COURS; // Fallback to thumbnail
+								}}
+							/>
+						</picture>
 
-						{/* 고해상도 이미지 */}
-						<img
-							src={animal.IMAGE_COURS}
-							alt={animal.SPECIES_NM}
-							className={`animal-image ${isLoaded ? "" : "hidden"}`}
-							onLoad={() => setIsLoaded(true)} // 로딩 완료 시 상태 업데이트
-							loading="lazy"
-						/>
 						<div className="overlap-button">
 							<div className="text-wrapper">{animal.STATE_NM}</div>
 						</div>
@@ -228,6 +245,7 @@ const StyledBox = styled.div`
 		justify-content: flex-end;
 		padding-left: 90%;
 	}
+
 	.scrapIcon {
 		width: 20px;
 		height: 20px;
@@ -236,6 +254,7 @@ const StyledBox = styled.div`
 		top: 0;
 		cursor: pointer;
 	}
+
 	.frame-wrapper {
 		height: 130px;
 		left: 0;
