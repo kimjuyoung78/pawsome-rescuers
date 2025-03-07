@@ -14,11 +14,7 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loadShelterData } from "../components/shelterSlice";
 import { AppDispatch } from "../components/store";
-import {
-	fetchAnimalData,
-	fetchAnimalDataPaginated,
-	AnimalData,
-} from "../services/api";
+import { fetchAnimalDataPaginated, AnimalData } from "../services/api";
 import ArrowDropDown from "../assets/images/arrow_drop_down.svg";
 import Arrow_left from "../assets/images/Arrow_left.svg";
 import Arrow_left_blue from "../assets/images/Arrow_left_blue.svg";
