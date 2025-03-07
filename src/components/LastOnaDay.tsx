@@ -3,7 +3,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -12,6 +11,7 @@ import styled from "styled-components";
 import { Text1 } from "../GlobalStyles";
 import AnimalDataBox from "../components/DataBox";
 import { Link } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 
 interface IData {
 	[key: string]: any;
@@ -45,10 +45,15 @@ const LastOneDay = () => {
 		return data.AbdmAnimalProtect[1].row;
 	};
 
-	const { data } = useQuery({
+	const { data, isLoading, error } = useQuery({
 		queryKey: ["LastOneDay"],
 		queryFn: fetchData,
+		staleTime: 5 * 60 * 1000, // 5분 동안 데이터를 신선한 상태로 유지
+		gcTime: 60 * 60 * 1000, // 1시간 동안 캐시 유지
 	});
+
+	if (isLoading) return <div>Loading...</div>;
+	if (error) return <div>Error: {error.message}</div>;
 
 	return (
 		<LastOneDayPageContainer>
@@ -88,6 +93,13 @@ const LastOneDay = () => {
 							{data.map((animal: any, index: number) => (
 								<SwiperSlide key={index}>
 									<Link to={`/animallist/detail/${animal.ABDM_IDNTFY_NO}`}>
+										{/* <img
+											src={animal.THUMB_IMAGE_COURS}
+											alt={animal.SPECIES_NM}
+											loading="lazy"
+											width="300"
+											height="200"
+										/> */}
 										<AnimalDataBox animal={animal} />
 									</Link>
 								</SwiperSlide>

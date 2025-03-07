@@ -1,8 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import {
 	Container,
 	Arrow,
-	Text1,
 	AnimalListContainer,
 	Pagination,
 	PageButton,
@@ -21,6 +20,9 @@ import Arrow_left_blue from "../assets/images/Arrow_left_blue.svg";
 import Arrow_right from "../assets/images/Arrow_right.svg";
 import Arrow_right_blue from "../assets/images/Arrow_right_blue.svg";
 import LastOneDay from "../components/LastOnaDay";
+
+const LazyLastOneDay = lazy(() => import("../components/LastOnaDay"));
+const LazyAnumalDataBox = lazy(() => import("../components/DataBox"));
 
 type FilterOptionsType = {
 	[key: string]: string[];
@@ -127,9 +129,9 @@ const AnimalList: React.FC = () => {
 	const totalPages = Math.ceil(totalCount / itemsPerPage);
 	return (
 		<Container>
-			{/*<Text1>공고기한이 얼마 남지 않은 친구들이에요!</Text1>*/}
-			{/* UrgentAnimalContainer 대신 LastOneDay 컴포넌트 사용 */}
-			<LastOneDay />
+			<Suspense fallback={<div>Loading...</div>}>
+				<LazyLastOneDay />
+			</Suspense>
 
 			<FilterContainer>
 				{Object.keys(filterOptions).map((filter) => (
@@ -158,7 +160,9 @@ const AnimalList: React.FC = () => {
 						to={`/animallist/detail/${animal.ABDM_IDNTFY_NO}`}
 						key={animal.ABDM_IDNTFY_NO}
 					>
-						<AnimalDataBox animal={animal} />
+						<Suspense fallback={<div>Loading...</div>}>
+							<LazyAnumalDataBox animal={animal} />
+						</Suspense>
 					</Link>
 				))}
 			</AnimalListContainer>

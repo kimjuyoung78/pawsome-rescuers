@@ -72,11 +72,11 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 					<div className="overlap-group-wrapper">
 						{/* 썸네일 이미지 */}
 						<img
-							src={getWebPImageUrl(animal.IMAGE_COURS)}
-							srcSet={`${animal.THUMB_IMAGE_COURS} 480w, ${animal.IMAGE_COURS} 1024w`}
-							sizes="(max-width: 768px) 100vw, 50vw"
+							src={animal.THUMB_IMAGE_COURS}
 							alt={animal.SPECIES_NM}
 							loading="lazy"
+							width="300"
+							height="200"
 						/>
 
 						{/* 고해상도 이미지 */}
