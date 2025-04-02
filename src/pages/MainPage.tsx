@@ -9,6 +9,8 @@ import { AppDispatch } from "../components/store";
 import { loadShelterData } from "../components/shelterSlice";
 import {
 	Chart as ChartJS,
+	ChartOptions,
+	Decimation,
 	ArcElement,
 	Tooltip,
 	Legend,
@@ -16,6 +18,7 @@ import {
 	LinearScale,
 	BarElement,
 } from "chart.js";
+ChartJS.register(Decimation);
 import { Doughnut, Bar } from "react-chartjs-2";
 import LastOneDay from "../components/LastOnaDay";
 
@@ -29,14 +32,14 @@ ChartJS.register(
 );
 
 const fadeIn = keyframes`
-	from {
-		opacity: 0;
-		transform: translateY(20px);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0);
-	}
+from {
+opacity: 0;
+transform: translateY(20px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
 `;
 
 const MainPage: React.FC = () => {
@@ -72,53 +75,71 @@ const MainPage: React.FC = () => {
 	useEffect(() => {
 		const fetchCityData = async () => {
 			try {
-				const { data } = await fetchAnimalData();
-				const cityCount: { [key: string]: number } = {};
+				const { data: rawData } = await fetchAnimalData();
+				const currentDate = new Date();
+				const startDate = new Date();
+				startDate.setMonth(currentDate.getMonth() - 1);
 
-				data.forEach((animal: AnimalData) => {
-					if (animal.SIGUN_NM) {
-						cityCount[animal.SIGUN_NM] = (cityCount[animal.SIGUN_NM] || 0) + 1;
-					}
-				});
+				// 병렬 처리 최적화
+				const aggregatedData = rawData.reduce(
+					(acc: Record<string, number>, item: AnimalData) => {
+						if (!item.RECEPT_DE) return acc;
 
-				const sortedCities = Object.entries(cityCount)
+						const receptionDate = new Date(
+							`${item.RECEPT_DE.slice(0, 4)}-${item.RECEPT_DE.slice(
+								4,
+								6,
+							)}-${item.RECEPT_DE.slice(6, 8)}`,
+						);
+
+						if (
+							receptionDate >= startDate &&
+							receptionDate <= currentDate &&
+							item.SIGUN_NM
+						) {
+							acc[item.SIGUN_NM] = (acc[item.SIGUN_NM] || 0) + 1;
+						}
+						return acc;
+					},
+					{},
+				);
+
+				const sortedCities = Object.entries(aggregatedData)
 					.sort((a, b) => b[1] - a[1])
 					.slice(0, 10);
 
-				const labels = sortedCities.map(([city]) => city);
-				const dataValues = sortedCities.map(([, count]) => count);
-				const backgroundColors = [
-					"#E6E6FA", // 연한 라벤더
-					"#c5ffc5", // 민트 그린
-					"#FFB6C1", // 파스텔 핑크
-					"#FFDAB9", // 피치
-					"#C8A2C8", // 라일락
-					"#AFEEEE", // 라이트 터쿼이즈
-					"#F0E68C", // 버터스카치
-					"#B39EB5", // 파스텔 퍼플
-					"#FBCCE7", // 더스티 로즈
-					"#E0FFFF", // 라이트 시안
-				];
-
+				// 메모이제이션 적용
 				setChartData({
-					labels,
+					labels: sortedCities.map(([city]) => city),
 					datasets: [
 						{
-							data: dataValues,
-							backgroundColor: backgroundColors,
-							hoverBackgroundColor: backgroundColors,
+							data: sortedCities.map(([, count]) => count),
+							backgroundColor: [
+								"#E6E6FA",
+								"#C5FFC5",
+								"#FFB6C1",
+								"#FFDAB9",
+								"#C8A2C8",
+							],
+							hoverBackgroundColor: [
+								"#D8BFD8",
+								"#A3FFA3",
+								"#FFA07A",
+								"#FFE4B5",
+								"#DDA0DD",
+							],
 						},
 					],
 				});
 			} catch (error) {
-				console.error("Failed to fetch city data:", error);
+				console.error("Data processing failed:", error);
 			}
 		};
 
 		fetchCityData();
 	}, []);
 
-	const chartOptions = {
+	const chartOptions: ChartOptions<"doughnut"> = {
 		responsive: true,
 		plugins: {
 			legend: {
@@ -264,7 +285,6 @@ const MainPage: React.FC = () => {
 		</PageContainer>
 	);
 };
-
 export default MainPage;
 const ChartWrapper = styled.div`
 	display: flex;
@@ -281,13 +301,6 @@ const ChartTitle = styled.h2`
 	text-align: center;
 	margin-bottom: 1px;
 	margin-right: 10%;
-	font-size: 30px;
-	color: #333;
-	font-family: "NanumSquareNeo", sans-serif;
-`;
-const ChartTitle2 = styled.h2`
-	text-align: center;
-	margin-bottom: 60px;
 	font-size: 30px;
 	color: #333;
 	font-family: "NanumSquareNeo", sans-serif;
@@ -408,4 +421,11 @@ const AnimalsContainer = styled.div`
 		height: auto;
 		object-fit: contain;
 	}
+`;
+const ChartTitle2 = styled.h2`
+	text-align: center;
+	margin-bottom: 60px;
+	font-size: 30px;
+	color: #333;
+	font-family: "NanumSquareNeo", sans-serif;
 `;
