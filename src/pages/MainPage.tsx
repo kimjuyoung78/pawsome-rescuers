@@ -292,33 +292,6 @@ const ChartTitle2 = styled.h2`
 	color: #333;
 	font-family: "NanumSquareNeo", sans-serif;
 `;
-const Container2 = styled.div`
-	position: fixed;
-	top: 50%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-	height: 550px;
-	width: 900px;
-	max-height: 1000px;
-	max-width: 1200px;
-	border-radius: 20px;
-	display: flex;
-	flex-direction: column;
-	align-items: center;
-	justify-content: center;
-	z-index: 1000; // 다른 요소들 위에 표시
-`;
-
-const LoaderWrapper = styled.div`
-	position: absolute;
-	top: 110%;
-	left: 50%;
-	transform: translate(-50%, -50%);
-`;
-
-const SwiperContainer = styled.div`
-	/* border:2px solid red; */
-`;
 
 const PageContainer = styled.div`
 	width: 1410px;
@@ -348,7 +321,7 @@ const TextContent = styled.div`
 	animation: ${fadeIn} 1s ease-out;
 `;
 
-// Title: 메인 제목을 스타일링합니다.
+// Title: 메인 제목을 스타일링
 const Title = styled.h1`
 	color: #323232;
 	font-size: 42px;
@@ -364,7 +337,7 @@ const BlueTitle = styled.span`
 
 const LineBreak = styled.br``;
 
-// Subtitle: 부제목을 스타일링합니다.
+// Subtitle: 부제목을 스타일링
 const Subtitle = styled.p`
 	color: #575757;
 	font-size: 18px;
@@ -373,7 +346,7 @@ const Subtitle = styled.p`
 	word-wrap: break-word;
 `;
 
-// Button: "나의 반려동물 찾기" 버튼을 스타일링합니다.
+// Button: "나의 반려동물 찾기" 버튼을 스타일링
 const Button = styled.button`
 	display: inline-flex;
 	height: 60px;
@@ -391,7 +364,7 @@ const Button = styled.button`
 
 	line-height: normal;
 	letter-spacing: -1.44px;
-	box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.2); //그림자
+	box-shadow: 0px 6px 6px rgba(0, 0, 0, 0.2);
 	transition: all 0.3s ease;
 
 	animation: ${fadeIn}1.2s ease-out;
@@ -408,9 +381,8 @@ const Button = styled.button`
 		transform: translateY(2px);
 	}
 `;
-// PawIcon: 버튼 내의 발바닥 아이콘을 위한 컴포넌트입니다.
+// PawIcon: 버튼 내의 발바닥 아이콘을 위한 컴포넌트
 const PawIcon = styled.span`
-	/* margin-left: 10px; */
 	color: white;
 
 	img {
@@ -420,7 +392,7 @@ const PawIcon = styled.span`
 	}
 `;
 
-// AnimalsContainer: 동물 이미지들을 감싸는 컨테이너입니다.
+// AnimalsContainer: 동물 이미지들을 감싸는 컨테이너
 const AnimalsContainer = styled.div`
 	flex: 1;
 	display: flex;
@@ -436,45 +408,4 @@ const AnimalsContainer = styled.div`
 		height: auto;
 		object-fit: contain;
 	}
-`;
-
-const UrgentAnimalContainer = styled.div`
-	width: 100%;
-	padding: 20px 0;
-	margin-bottom: 20px;
-	position: relative;
-
-	.swiper-container {
-		padding-left: 0;
-	}
-
-	.swiper-slide {
-		width: auto;
-		max-width: 300px;
-	}
-
-	.swiper-button-next,
-	.swiper-button-prev {
-		color: #47b2ff;
-	}
-
-	.swiper-button-prev {
-		left: 10px;
-	}
-
-	.swiper-button-next {
-		right: 10px;
-	}
-
-	.swiper-pagination {
-		color: #333;
-	}
-`;
-
-const NoUrgentAnimals = styled.div`
-	width: 100%;
-	text-align: center;
-	padding: 10px;
-	font-size: 18px;
-	color: #666;
 `;
