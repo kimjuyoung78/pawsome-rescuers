@@ -10,15 +10,6 @@ interface DataBoxProps {
 
 const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 	const [isLoaded, setIsLoaded] = useState(false); // 고해상도 이미지 로딩 상태 관리
-	// 이미지 경로에서 날짜와 ID를 추출하여 WebP 포맷 URL 생성
-	const getWebPImageUrl = (imageUrl: string) => {
-		const parts = imageUrl.split("/");
-		const year = parts[5]; // 경로에서 연도 추출
-		const month = parts[6]; // 경로에서 월 추출
-		const fileName = parts[7].split(".")[0]; // 파일명 추출 (확장자 제거)
-		return `http://www.animal.go.kr/files/shelter/${year}/${month}/${fileName}.webp`;
-	};
-
 	const [isScraped, setIsScraped] = useState(false);
 
 	const getAge = (ageInfo: string): number => {
@@ -78,7 +69,6 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 							width="300"
 							height="200"
 						/>
-
 						{/* 고해상도 이미지 */}
 						<img
 							src={animal.IMAGE_COURS}
@@ -168,9 +158,9 @@ const StyledBox = styled.div`
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		transition: opacity 0.3s ease-in-out;
+		transition: opacity 0.3s ease-in-out; //고화질 이미지로 전환 되었을 때 부드러운 전환 효과 CSS 트랜지션 적용
 	}
-
+	//로딩 중인 이미지는 숨김 처리 -> 레이아웃 시프트 방지
 	.hidden {
 		opacity: 0; /* 숨김 처리 */
 		position: absolute; /* 공간 차지 방지 */

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { lazy, useState, Suspense } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation } from "swiper/modules";
 import "swiper/css";
@@ -16,6 +16,9 @@ import { useQuery } from "@tanstack/react-query";
 interface IData {
 	[key: string]: any;
 }
+
+const LazyLastOneDay = lazy(() => import("../components/LastOnaDay"));
+const LazyAnumalDataBox = lazy(() => import("../components/DataBox"));
 
 const LastOneDay = () => {
 	const formatDateToYYYYMMDD = (date: Date) => {
