@@ -11,6 +11,7 @@ interface DataBoxProps {
 const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 	const [isLoaded, setIsLoaded] = useState(false); // 고해상도 이미지 로딩 상태 관리
 	const [isScraped, setIsScraped] = useState(false);
+	const [showThumbnail, setShowThumbnail] = useState(true);
 
 	const getAge = (ageInfo: string): number => {
 		const year = ageInfo.split("(")[0];
@@ -68,13 +69,17 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 							loading="lazy"
 							width="300"
 							height="200"
+							className={`animal-thumbnail ${!showThumbnail ? "hidden" : ""}`}
 						/>
 						{/* 고해상도 이미지 */}
 						<img
 							src={animal.IMAGE_COURS}
 							alt={animal.SPECIES_NM}
 							className={`animal-image ${isLoaded ? "" : "hidden"}`}
-							onLoad={() => setIsLoaded(true)} // 로딩 완료 시 상태 업데이트
+							onLoad={() => {
+								setIsLoaded(true);
+								setShowThumbnail(false);
+							}}
 							loading="lazy"
 						/>
 						<div className="overlap-button">
@@ -152,19 +157,25 @@ const StyledBox = styled.div`
 		height: 100%;
 		object-fit: cover;
 		transition: opacity 0.3s ease-in-out;
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
 
 	.animal-image {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
-		transition: opacity 0.3s ease-in-out; //고화질 이미지로 전환 되었을 때 부드러운 전환 효과 CSS 트랜지션 적용
+		transition: opacity 0.3s ease-in-out;
+		position: absolute;
+		top: 0;
+		left: 0;
 	}
-	//로딩 중인 이미지는 숨김 처리 -> 레이아웃 시프트 방지
+
 	.hidden {
-		opacity: 0; /* 숨김 처리 */
-		position: absolute; /* 공간 차지 방지 */
-		pointer-events: none; /* 클릭 불가능 */
+		opacity: 0;
+		position: absolute;
+		pointer-events: none;
 	}
 
 	.overlap-button {
