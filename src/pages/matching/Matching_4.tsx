@@ -114,7 +114,7 @@ const Matching_4: React.FC = () => {
                 <NextBtn onClick={handleNextStep}>
                     다음
                     <PawIcon>
-                        <img src={Paw} alt="Paw icon" />
+                        <img src={Paw} alt="발바닥 구조대 발바닥 아이콘" />
                     </PawIcon>
                 </NextBtn>
             </Container2>
