@@ -172,7 +172,7 @@ const AnimalMap: React.FC<IProps> = ({ setShelterName }) => {
 						<Arrow onClick={handlePrevPage}>
 							<img
 								src={currentPage === 1 ? Arrow_left : Arrow_left_blue}
-								alt="Previous page"
+								alt="이전 페이지 이미지"
 							/>
 						</Arrow>
 						{getPageNumbers().map((page) => (
@@ -189,7 +189,7 @@ const AnimalMap: React.FC<IProps> = ({ setShelterName }) => {
 								src={
 									currentPage === totalPages ? Arrow_right : Arrow_right_blue
 								}
-								alt="Next page"
+								alt="다음 페이지 이미지"
 							/>
 						</Arrow>
 					</Pagination2>

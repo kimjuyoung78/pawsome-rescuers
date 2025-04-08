@@ -69,7 +69,7 @@ const ScrapPage: React.FC = () => {
 		return (
 			<Container2>
 				<DogAndCatScrap>
-					<img src={DogAndCat} alt="DogAndCat" />
+					<img src={DogAndCat} alt="강아지와 고양이 이미지" />
 				</DogAndCatScrap>
 				<Text2>다시 보고 싶은 친구들을 추가해주세요!</Text2>
 			</Container2>
@@ -93,7 +93,7 @@ const ScrapPage: React.FC = () => {
 				<Arrow onClick={handlePrevPage}>
 					<img
 						src={currentPage === 1 ? Arrow_left : Arrow_left_blue}
-						alt="Previous page"
+						alt="이전 페이지 이미지"
 					/>
 				</Arrow>
 				{Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -108,7 +108,7 @@ const ScrapPage: React.FC = () => {
 				<Arrow onClick={handleNextPage}>
 					<img
 						src={currentPage === totalPages ? Arrow_right : Arrow_right_blue}
-						alt="Next page"
+						alt="다음 페이지 이미지"
 					/>
 				</Arrow>
 			</Pagination>

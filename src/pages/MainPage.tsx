@@ -260,7 +260,7 @@ const MainPage: React.FC = () => {
 					<Button onClick={handleMatching}>
 						나의 반려동물 찾기
 						<PawIcon>
-							<img src={Paw} />
+							<img src={Paw} alt="발바닥 구조대 발바닥 이미지" />
 						</PawIcon>
 					</Button>
 				</TextContent>
