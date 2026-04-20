@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getBreedName } from "../utils/breedCodeMap";
 import scrapNo from "../assets/images/scrap_no.svg";
 import scrapYes from "../assets/images/scrap_yes.svg";
 import styled from "styled-components";
@@ -118,7 +119,7 @@ const DataBox: React.FC<DataBoxProps> = ({ animal, onScrapChange }) => {
 							</div>
 						</div>
 					</div>
-					<div className="text-wrapper-10">{animal.SPECIES_NM}</div>
+					<div className="text-wrapper-10">{getBreedName(animal.SPECIES_NM)}</div>
 				</div>
 			</div>
 		</StyledBox>

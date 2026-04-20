@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getBreedName } from "../../utils/breedCodeMap";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Container } from "../../GlobalStyles";
@@ -36,7 +37,7 @@ const MatchingResult: React.FC = () => {
 									<AC key={index}>
 										<Cercle src={animal.IMAGE_COURS}></Cercle>
 										<ACWrapper>
-											<Name>{animal.SPECIES_NM}</Name>
+											<Name>{getBreedName(animal.SPECIES_NM)}</Name>
 											<Name2>{animal.AGE_INFO}</Name2>
 										</ACWrapper>
 										<GoDetail

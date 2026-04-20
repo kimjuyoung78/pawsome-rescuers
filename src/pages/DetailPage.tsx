@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { getBreedName } from "../utils/breedCodeMap";
 import { useParams } from "react-router-dom";
 import scrapNo from "../assets/images/scrap_no.svg";
 import scrapYes from "../assets/images/scrap_yes.svg";
@@ -64,7 +65,7 @@ const DetailPage: React.FC = () => {
 					<Section1_2>
 						<Info>
 							<A>품종</A>
-							<B>{animalData.SPECIES_NM}</B>
+							<B>{getBreedName(animalData.SPECIES_NM)}</B>
 						</Info>
 						<Info>
 							<A>성별</A>
