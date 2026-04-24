@@ -132,7 +132,7 @@ const MainPage: React.FC = () => {
 					],
 				});
 			} catch (error) {
-				console.error("Data processing failed:", error);
+				// console.error("Data processing failed:", error);
 			}
 		};
 
@@ -219,7 +219,7 @@ const MainPage: React.FC = () => {
 					],
 				});
 			} catch (error) {
-				console.error("Failed to fetch status data:", error);
+				// console.error("Failed to fetch status data:", error);
 			}
 		};
 

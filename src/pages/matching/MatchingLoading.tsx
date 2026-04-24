@@ -35,7 +35,7 @@ const MatchingLoading: React.FC = () => {
 		const fetchAndFilterData = async () => {
 		try {
 			const { data, totalCount } = await fetchAnimalData();
-			console.log(`Total data count: ${totalCount}`);
+			// console.log(`Total data count: ${totalCount}`);
 			const transformedData: TransformedAnimalData[] = data.map(transformAnimalData);
 			const filteredData = transformedData.filter(animal => {
 			const speciesMatch = animal.species === species;
@@ -56,7 +56,7 @@ const MatchingLoading: React.FC = () => {
 			localStorage.setItem('matchingAnimals', JSON.stringify(matchingAnimals));
 			setIsLoading(false);
 		} catch (error) {
-			console.error("Error fetching animal data:", error);
+			// console.error("Error fetching animal data:", error);
 			setIsLoading(false);
 		}
 		};

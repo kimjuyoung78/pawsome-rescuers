@@ -104,17 +104,17 @@ export const Pagination = styled.div`
     margin-top: 20px;
 `;
 
-export const PageButton = styled.button<{ active: boolean }>`
+export const PageButton = styled.button<{ $active: boolean }>`
     margin: 0 5px;
     padding: 5px 10px;
     border: 2px solid #ccc;
-    background-color: ${props => props.active ? '#47b1ff' : 'white'};
-    color: ${props => props.active ? 'white' : '#ccc'};
+    background-color: ${props => props.$active ? '#47b1ff' : 'white'};
+    color: ${props => props.$active ? 'white' : '#ccc'};
     cursor: pointer;
     border-radius: 5px;
 
     &:hover {
-        background-color: ${props => props.active ? '#47b1ff' :'#47b1ff'};
+        background-color: ${props => props.$active ? '#47b1ff' :'#47b1ff'};
     }
 `;
 

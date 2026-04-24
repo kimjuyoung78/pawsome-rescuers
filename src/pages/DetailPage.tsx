@@ -22,13 +22,13 @@ const DetailPage: React.FC = () => {
 					const data = await fetchAnimalDataById(id);
 					if (data) {
 						setAnimalData(data);
-						console.log("Fetched animal data:", data);
+						// console.log("Fetched animal data:", data);
 					} else {
-						console.error("No data found for animal ID:", id);
+						// console.error("No data found for animal ID:", id);
 						// 에러 상태 설정 또는 사용자에게 알림
 					}
 				} catch (error) {
-					console.error("Error fetching animal data:", error);
+					// console.error("Error fetching animal data:", error);
 					// 에러 상태 설정 또는 사용자에게 알림
 				}
 			}

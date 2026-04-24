@@ -1,5 +1,5 @@
 import React from 'react';
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, useKakaoLoader } from "react-kakao-maps-sdk";
 import Paw from "../assets/images/Paw_blue.svg";
 
 interface KakaoMapProps {
@@ -11,11 +11,17 @@ interface KakaoMapProps {
     level?: number;
 }
 
-const KakaoMap: React.FC<KakaoMapProps> = ({ 
+const KakaoMap: React.FC<KakaoMapProps> = ({
     center = { lat: 33.450701, lng: 126.570667 },
     style = { width: '90%', height: '100px' },
     level = 3
     }) => {
+    const [loading, error] = useKakaoLoader({
+        appkey: "8302895b0ba8071839167bc1c09e5416",
+    });
+
+    if (loading || error) return null;
+
     return (
         <Map
         center={center}
@@ -26,8 +32,6 @@ const KakaoMap: React.FC<KakaoMapProps> = ({
                 position={center}
                 image={{
                     src:Paw,
-                    // src={Paw}안되는 이유
-                    // src 속성은 문자열을 기대하는데, 객체 형태로 값을 전달하고 있어서 타입 오류가 발생
                     size:{
                         width : 50,
                         height: 70

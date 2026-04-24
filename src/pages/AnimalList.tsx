@@ -85,7 +85,7 @@ const AnimalList: React.FC = () => {
 				setAnimalData(result.data);
 				setTotalCount(result.totalCount);
 			} catch (error) {
-				console.error("Failed to fetch paged animal data:", error);
+				// console.error("Failed to fetch paged animal data:", error);
 			}
 		};
 
@@ -178,7 +178,7 @@ const AnimalList: React.FC = () => {
 					<PageButton
 						key={page}
 						onClick={() => setCurrentPage(page)}
-						active={currentPage === page}
+						$active={currentPage === page}
 					>
 						{page}
 					</PageButton>

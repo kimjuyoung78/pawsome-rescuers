@@ -20,11 +20,11 @@ const Matching_3: React.FC = () => {
 	const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
 	useEffect(() => {
-		console.log("Current localStorage state:", {
-			species: localStorage.getItem("species"),
-			sex: localStorage.getItem("sex"),
-			weight: localStorage.getItem("weight"),
-		});
+		// console.log("Current localStorage state:", {
+		// 	species: localStorage.getItem("species"),
+		// 	sex: localStorage.getItem("sex"),
+		// 	weight: localStorage.getItem("weight"),
+		// });
 	}, []);
 
 	const handleNextStep = () => {
@@ -39,7 +39,7 @@ const Matching_3: React.FC = () => {
 	const handleChoiceClick = (choice: "AA" | "BB" | "CC" | "DD") => {
 		setSelectedOption(choice);
 		localStorage.setItem("weight", choice);
-		console.log(`Weight set to: ${choice}`);
+		// console.log(`Weight set to: ${choice}`);
 	};
 
 	return (

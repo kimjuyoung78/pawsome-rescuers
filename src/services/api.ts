@@ -47,7 +47,7 @@
     // 수정: 반환 타입 변경
     // 주석: 특정 ID의 동물 데이터를 가져오는 함수
     export const fetchAnimalDataById = async (id: string): Promise<AnimalData | null> => {
-        console.log('Fetching data for animal ID:', id);
+        // console.log('Fetching data for animal ID:', id);
         
         try {
             if (!API_KEY) {
@@ -83,15 +83,15 @@
     
                     pIndex++;
                 } else {
-                    console.error('Unexpected API response structure:', response.data);
+                    // console.error('Unexpected API response structure:', response.data);
                     return null;
                 }
             }
-    
-            console.error('Animal not found with ID:', id);
+
+            // console.error('Animal not found with ID:', id);
             return null;
         } catch (error) {
-            console.error('Error fetching animal data:', error);
+            // console.error('Error fetching animal data:', error);
             throw error;
         }
     }
@@ -126,7 +126,7 @@
                     // 첫 번째 응답에서만 전체 데이터 개수를 가져옴
                     if (pIndex === 1) {
                         totalCount = response.data.AbdmAnimalProtect[0].head[0].list_total_count;
-                        console.log(`총 데이터 수 : ${totalCount}`);
+                        // console.log(`총 데이터 수 : ${totalCount}`);
                     }
 
                     // 가져온 데이터가 pSize보다 적으면 모든 데이터를 가져온 것으로 간주
@@ -136,15 +136,15 @@
 
                     pIndex++; // 다음 페이지로
                 } else {
-                    console.error('Unexpected API response structure:', response.data);
+                    // console.error('Unexpected API response structure:', response.data);
                     break;
                 }
             }
 
-            console.log(`Total fetched data: ${allData.length}`);
+            // console.log(`Total fetched data: ${allData.length}`);
             return { data: allData, totalCount };
         } catch (error) {
-            console.error('Error fetching animal data:', error);
+            // console.error('Error fetching animal data:', error);
             throw error;
         }
     };
@@ -185,11 +185,11 @@
         
                 pIndex++;
             } else {
-                console.error('Unexpected API response structure:', response.data);
+                // console.error('Unexpected API response structure:', response.data);
                 break;
             }
             }
-        
+
             return urgentAnimals.slice(0, 20); //최대 20개 데이터
         };
         
@@ -223,11 +223,11 @@
                 
                 return { data: animalData, totalCount };
             } else {
-                console.error('Unexpected API response structure:', response.data);
+                // console.error('Unexpected API response structure:', response.data);
                 return { data: [], totalCount: 0 };
             }
         } catch (error) {
-            console.error('Error fetching animal data:', error);
+            // console.error('Error fetching animal data:', error);
             throw error;
         }
     };
@@ -254,7 +254,7 @@
 
             return Array.from(shelterMap.values());
         } catch (error) {
-            console.error('Error fetching unique shelters:', error);
+            // console.error('Error fetching unique shelters:', error);
             throw error;
         }
     };

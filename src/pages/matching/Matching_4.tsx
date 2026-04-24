@@ -28,11 +28,11 @@ const Matching_4: React.FC = () => {
     useEffect(() => {
         const storedSpecies = localStorage.getItem('species');
         setSpecies(storedSpecies);
-        console.log("Current localStorage state:", {
-            species: storedSpecies,
-            sex: localStorage.getItem('sex'),
-            weight: localStorage.getItem('weight')
-        });
+        // console.log("Current localStorage state:", {
+        //     species: storedSpecies,
+        //     sex: localStorage.getItem('sex'),
+        //     weight: localStorage.getItem('weight')
+        // });
     }, []);
 
     const handleColorSelection = (color: ColorCategory) => {

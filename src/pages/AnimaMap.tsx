@@ -57,7 +57,7 @@ const AnimalMap: React.FC<IProps> = ({ setShelterName }) => {
 					setAnimalData(result.data);
 					setTotalCount(result.totalCount);
 				} catch (error) {
-					console.error("Failed to fetch animal data:", error);
+					// console.error("Failed to fetch animal data:", error);
 				}
 			}
 		};
@@ -144,7 +144,7 @@ const AnimalMap: React.FC<IProps> = ({ setShelterName }) => {
 									},
 								}}
 								onClick={() => {
-									console.log(shelter.SHTER_NM);
+									// console.log(shelter.SHTER_NM);
 									setSelectedShelter(shelter.SHTER_NM);
 									if (setShelterName) {
 										setShelterName(shelter.SHTER_NM);
